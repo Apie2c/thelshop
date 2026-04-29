@@ -1409,7 +1409,8 @@
         const keys = ['All', ...Object.keys(LUXE_VAULT)];
         const html = keys.map(key => {
             const isActive = key === currentFilter ? 'active-chip' : '';
-            const label = key === 'All' ? 'Home' : key;
+            const prettyNames = { 'All': 'Home', 'Mens': "Men's", 'Womens': "Women's", 'Kids': 'Kids', 'Activewear': 'Activewear', 'Saved': 'Saved' };
+            const label = prettyNames[key] || key;
             return `<button onclick="filterCategory('${key}', this)" class="cat-chip ${isActive} bg-gray-100 dark:bg-gray-800/50 text-gray-500 whitespace-nowrap px-4 py-1.5 rounded-lg font-bold text-[9px] uppercase tracking-widest transition-all">${label}</button>`;
         }).join('');
         if (desktops) desktops.innerHTML = html;
