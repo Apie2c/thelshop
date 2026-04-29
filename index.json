@@ -1,0 +1,8 @@
+{
+  "categories": [
+    { "name": "Men's",     "file": "mens.json"       },
+    { "name": "Women's",   "file": "womens.json"     },
+    { "name": "Kids",      "file": "kids.json"       },
+    { "name": "Activewear","file": "activewear.json" }
+  ]
+}
