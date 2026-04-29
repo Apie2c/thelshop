@@ -337,7 +337,7 @@
         <div class="max-w-7xl mx-auto h-16 lg:h-20 flex items-center justify-between gap-2">
             
             <h1 class="text-xl md:text-2xl font-black tracking-tighter text-brand-primary cursor-pointer flex-shrink-0" onclick="location.href=window.location.pathname">
-                THREADVAULT<span style="color:#e07049".</span>
+                THREADVAULT<span style="color:#e07049">.</span>
             </h1>
 
             <div class="flex lg:hidden items-center justify-center gap-3.5 flex-1 px-1">
@@ -1403,18 +1403,27 @@
                                    .sort(() => Math.random() - 0.5);
     }
 
+    const prettyNames = { 'All': 'Home', 'Mens': "Men's", 'Womens': "Women's", 'Kids': 'Kids', 'Activewear': 'Activewear', 'Saved': 'Saved' };
+
     function initCategories() {
         const desktops = document.getElementById('category-chips-desktop');
         const mobiles = document.getElementById('category-chips-mobile');
         const keys = ['All', ...Object.keys(LUXE_VAULT)];
-        const html = keys.map(key => {
-            const isActive = key === currentFilter ? 'active-chip' : '';
-            const prettyNames = { 'All': 'Home', 'Mens': "Men's", 'Womens': "Women's", 'Kids': 'Kids', 'Activewear': 'Activewear', 'Saved': 'Saved' };
-            const label = prettyNames[key] || key;
-            return `<button onclick="filterCategory('${key}', this)" class="cat-chip ${isActive} bg-gray-100 dark:bg-gray-800/50 text-gray-500 whitespace-nowrap px-4 py-1.5 rounded-lg font-bold text-[9px] uppercase tracking-widest transition-all">${label}</button>`;
-        }).join('');
-        if (desktops) desktops.innerHTML = html;
-        if (mobiles) mobiles.innerHTML = html;
+
+        [desktops, mobiles].forEach(function(container) {
+            if (!container) return;
+            container.innerHTML = '';
+            keys.forEach(function(key) {
+                const btn = document.createElement('button');
+                btn.className = 'cat-chip ' + (key === currentFilter ? 'active-chip ' : '') + 'bg-gray-100 dark:bg-gray-800/50 text-gray-500 whitespace-nowrap px-4 py-1.5 rounded-lg font-bold text-[9px] uppercase tracking-widest transition-all';
+                btn.textContent = prettyNames[key] || key;
+                btn.dataset.cat = key;
+                btn.addEventListener('click', function() {
+                    filterCategory(this.dataset.cat, this);
+                });
+                container.appendChild(btn);
+            });
+        });
     }
 
     function renderProductCard(p, index, latestSet) {
